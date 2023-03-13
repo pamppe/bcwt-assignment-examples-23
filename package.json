@@ -1,0 +1,20 @@
+{
+  "name": "bcwt-assignment-examples-23",
+  "version": "0.0.2",
+  "description": "index.js",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "docs": "mkdir docs && touch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pamppe <emil.lehikoinen@outloo.com>",
+  "license": "ISC",
+  "directories": {
+    "doc": "docs"
+  }
+}
