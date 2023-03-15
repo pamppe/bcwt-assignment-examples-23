@@ -1,12 +1,15 @@
-html
-    head
-        style
-            include style.css
-        title=title
-    body
-        header
-    h1=title
-    h2
-    p=description
-    footer
-html
+doctype html
+head
+    title Title
+    style
+        include style.css
+    title= title
+body
+h1 Click on the cat
+    header
+        h2= Name
+    figure
+       img.big.small.trans(src='./img/cat.jpg')
+    p= birthdate
+    p= Weight
+script(src='./js/main.js')
