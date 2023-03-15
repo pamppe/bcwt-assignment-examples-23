@@ -13,7 +13,7 @@
     "docs": "mkdir docs && touch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "pamppe <emil.lehikoinen@outloo.com>",
+  "author": "pamppe <emil.lehikoinen@outlook.com>",
   "license": "ISC",
   "directories": {
     "doc": "docs"
