@@ -1,7 +1,7 @@
 'use strict';
 // catController
-const catModel = require('../models/catModel');
 
+const catModel = require('../models/catModel');
 const cats = catModel.cats;
 const getCatList = (req, res) => {
     res.json(cats);
@@ -24,8 +24,9 @@ const getCat = (req, res) => {
     res.json(cat);
 };
 const postCat = (req, res) => {
-    const createCat = req.params.cats;
-    res.json(createCat);
+    console.log('posting a cat', req.body, req.file);
+    res.send('Trying to add cat with name' + req.body.name)
+    //res.json(createCat);
 }
 const putCat = (req, res) => {
     const updateCat = req.params.cats;
