@@ -11,7 +11,7 @@ router.get('/', catController.getCatList);
 router.get('/:catId', catController.getCat);
 router.post('/', upload.single('cat'), catController.postCat);
 router.put('/', catController.putCat);
-router.delete('/', catController.deleteCat)
+router.delete('/:catId', catController.deleteCat)
 
 
 // TODO: ADD USER

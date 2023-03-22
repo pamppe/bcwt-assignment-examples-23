@@ -1,46 +1,62 @@
 'use strict';
 // catController
-
 const catModel = require('../models/catModel');
-const cats = catModel.cats;
-const getCatList = (req, res) => {
-    res.json(cats);
+
+const getCatList = async (req, res) => {
+    try {
+        const cats = await catModel.getAllCats();
+        //console.log(cats);
+        res.json(cats);
+    }
+    catch (error) {
+            res.status(500).json({error: 500, message: error.message});
+        }
 };
-const getCat = (req, res) => {
+const getCat = async (req, res) => {
     //console.log(req.params);
-    const id = req.params.catId;
-    //TODO: filter matching cat based on id
-    // TODO: response 404 if id not found in array (res.status(404))
-    /*const fileteredCats = cats.filter(cat => id == cat.id);
-    const cat = filteredCats[0]
-    res.json(cat);
-    };*/
-    const cat = cats.find(cat => cat.id === id);
-    if (!cat) {
-        //res.status(404).send("Cat not found");
-        res.status(404).json({message: 'cat not found'})
+    //convert id value to number
+    const catId = Number(req.params.catId);
+    // check if number is not an integer
+    if (!Number.isInteger(catId)) {
+        res.status(400).json({error: 500, message: "invalid id"});
         return;
     }
-    res.json(cat);
+    // TODO: wrap to try-catch
+    const [cat] = await catModel.getCatById(catId);
+    console.log("get cat" ,cat);
+    //TODO: filter matching cat based on id
+    // TODO: response 404 if id not found in array (res.status(404))
+    if (cat) {
+        res.json(cat);
+    } else
+        {
+            //res.status(404).send("Cat not found");
+            res.status(404).json({message: 'cat not found'})
+        }
 };
-const postCat = (req, res) => {
+
+const postCat = async (req, res) => {
     console.log('posting a cat', req.body, req.file);
     // add cat details to cats array
     const newCat = req.body;
-    newCat.filename = 'http://localhost:3000/' + req.file.path;
-    cats.push(newCat);
+    newCat.filename = req.file.path;
+   const result = await catModel.insertCat(newCat);
     // send correct response if upload successful
     res.status(201).send('new cat added!');
 };
-const putCat = (req, res) => {
-    const updateCat = req.params.cats;
-    res.json(updateCat);
-}
-const deleteCat = (req, res) => {
-    const delCat = req.params.cats;
-    res.json(delCat);
-}
-
+const putCat = async (req, res) => {
+        console.log('modify a cat', req.body);
+        //TODO: add try-catch
+    const cat = req.body;
+        const result = await catModel.modifyCat(req.body);
+        // send correct response if upload successful
+        res.status(200).send('Cat modified');
+    };
+const deleteCat = async (req, res) => {
+    console.log('deleting a cat', req.params.catId);
+    const result = await catModel.deleteCat(req.params.catId);
+    res.status(200).send('Cat deleted');
+};
 
 const catController = {getCatList, getCat, postCat, putCat, deleteCat};
 module.exports = catController;
