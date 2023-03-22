@@ -25,9 +25,13 @@ const getCat = (req, res) => {
 };
 const postCat = (req, res) => {
     console.log('posting a cat', req.body, req.file);
-    res.send('Trying to add cat with name' + req.body.name)
-    //res.json(createCat);
-}
+    // add cat details to cats array
+    const newCat = req.body;
+    newCat.filename = 'http://localhost:3000/' + req.file.path;
+    cats.push(newCat);
+    // send correct response if upload successful
+    res.status(201).send('new cat added!');
+};
 const putCat = (req, res) => {
     const updateCat = req.params.cats;
     res.json(updateCat);
