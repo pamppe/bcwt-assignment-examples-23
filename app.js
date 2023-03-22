@@ -14,8 +14,8 @@ app.use((req, res, next) => {
 
 // Serve example-ui
 app.use(express.static('example-ui'));
-
-// Add cors headers
+// Add 'Access-Control-Allow-Origin: *' header to all
+// responses using cors middleware
 app.use(cors());
 // middleware for parsing request body
 app.use(express.json());
