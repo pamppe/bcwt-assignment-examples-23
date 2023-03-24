@@ -3,15 +3,15 @@
 const userModel = require('../models/userModel');
 const catModel = require("../models/catModel");
 
-const users = userModel.users;
+/*const users = userModel.users;
 //remove passwords
 for (const user of users) {
     delete user.password;
-}
+}*/
 
 const getUserList = async (req, res) => {
     try {
-        const users = await catModel.getAllUsers();
+        const users = await userModel.getAllUsers();
         //console.log(cats);
         res.json(users);
     }

@@ -47,7 +47,7 @@ const insertCat = async (cat) => {
     console.error("error", e.message);
     throw new Error("sql query failed");
   }
-}
+};
 const modifyCat = async (cat) => {
   try {
     //TODO: add sql UPDATE
@@ -68,8 +68,8 @@ const modifyCat = async (cat) => {
   }
 };
 
-const deleteCat = async (cat) => {
-  try {user
+const deleteCat = async () => {
+  try {
     //TODO: add sql UPDATE
     const sql = `DELETE FROM wop_cat WHERE cat_id=?`;
     const [rows] = await promisePool.query(sql, [id]);
@@ -82,5 +82,5 @@ const deleteCat = async (cat) => {
 };
 
 module.exports = {
-  getAllCats, getCatById, insertCat, modifyCat,deleteCat
+  getAllCats, getCatById, insertCat, modifyCat, deleteCat
 };
