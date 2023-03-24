@@ -23,7 +23,7 @@ const getCat = async (req, res) => {
     }
     // TODO: wrap to try-catch
     const [cat] = await catModel.getCatById(catId);
-    console.log("get cat" ,cat);
+    console.log("get cat", cat);
     //TODO: filter matching cat based on id
     // TODO: response 404 if id not found in array (res.status(404))
     if (cat) {

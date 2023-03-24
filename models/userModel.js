@@ -1,5 +1,9 @@
 'use strict';
-const users = [
+const pool = require("../database/db");
+const promisePool = pool.promise();
+
+
+/*const users = [
   {
     id: '1',
     name: 'John Doe',
@@ -12,7 +16,7 @@ const users = [
     email: 'jane@metropolia.fi',
     password: 'qwer',
   },
-];
+];*/
 
 module.exports = {
   users,
