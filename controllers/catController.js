@@ -4,8 +4,14 @@ const catModel = require('../models/catModel');
 
 const getCatList = async (req, res) => {
     try {
-        const cats = await catModel.getAllCats();
-        //console.log(cats);
+        let cats = await catModel.getAllCats();
+        // convert ISO date to date only
+        // should this be done on the front-end side??
+        cats.map(cat => {
+            cat.birthdate = cat.birthdate.toISOString().split('T')[0];
+            return cat;
+        });
+        console.log(cats);
         res.json(cats);
     }
     catch (error) {
@@ -40,22 +46,34 @@ const postCat = async (req, res) => {
     // add cat details to cats array
     const newCat = req.body;
     newCat.filename = req.file.path;
-   const result = await catModel.insertCat(newCat);
-    // send correct response if upload successful
-    res.status(201).send('new cat added!');
+    try {
+        const result = await catModel.insertCat(newCat);
+        // send correct response if upload successful
+        res.status(201).json({message: 'new cat added!'});
+    } catch (error) {
+        res.status(500).json({error: 500, message: error.message});
+    }
 };
 const putCat = async (req, res) => {
         console.log('modify a cat', req.body);
         //TODO: add try-catch
     const cat = req.body;
+    try {
         const result = await catModel.modifyCat(req.body);
         // send correct response if upload successful
-        res.status(200).send('Cat modified');
+        res.status(200).json('Cat modified');
+    } catch (error) {
+        res.status(500).json({error: 500, message: error.message});
+    }
     };
 const deleteCat = async (req, res) => {
     console.log('deleting a cat', req.params.catId);
-    const result = await catModel.deleteCat(req.params.catId);
-    res.status(200).send('Cat deleted');
+    try {
+        const result = await catModel.deleteCat(req.params.catId);
+        res.status(200).json('Cat deleted');
+    } catch (error) {
+        res.status(500).json({error: 500, message: error.message});
+    }
 };
 
 const catController = {getCatList, getCat, postCat, putCat, deleteCat};
