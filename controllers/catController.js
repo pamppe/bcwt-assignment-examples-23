@@ -45,7 +45,7 @@ const postCat = async (req, res) => {
     console.log('posting a cat', req.body, req.file);
     // add cat details to cats array
     const newCat = req.body;
-    newCat.filename = req.file.path;
+    newCat.filename = req.file.filename;
     try {
         const result = await catModel.insertCat(newCat);
         // send correct response if upload successful

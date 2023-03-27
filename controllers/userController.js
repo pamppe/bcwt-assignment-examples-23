@@ -52,11 +52,11 @@ const postUser = async (req, res) => {
         // email: req.body.email,
         // password: req.body.password
         //};
-        users.push(newUser);
-        res.status(201).json('Added user ' + req.body.name);
+        res.status(201).json({message: 'Added user '+ req.body.name});
         // const createUser = req.params.user;
         //res.json(createUser);
     }catch (error) {
+        res.status(404).json({message: 'User Not added!'})
         console.error('error',error.message);
         throw new Error ('Post failed!');
 
@@ -81,8 +81,6 @@ const putUser = async (req, res) => {
         throw new Error ('Modify failed!');
 
     }
-
-
    // const updateUser = req.params.user;
    // res.json(updateUser);
 
