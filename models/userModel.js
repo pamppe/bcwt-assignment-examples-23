@@ -26,12 +26,13 @@ const getUserById = async (id) => {
 };
 const insertUser = async (user) => {
   try {
-    const sql = `INSERT INTO wop_user VALUES (?, ?, ?);`;
+    const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?, ?);`;
     const [rows] = await promisePool.query(sql, [
-      null,
+      null, // id is auto_increment
       user.name,
       user.email,
-      user.password
+      user.passwd,
+        0
     ]);
     //console.log(rows);
     return rows;
@@ -43,12 +44,13 @@ const insertUser = async (user) => {
 const modifyUser = async (user) => {
   try {
     //TODO: add sql UPDATE
-    const sql = `UPDATE wop_user SET name=?, email=?, password=?
+    const sql = `UPDATE wop_user SET name=?, email=?, password=?, roll=?
                  WHERE user_id=?`;
     const [rows] = await promisePool.query(sql, [
       user.name,
       user.email,
-      user.password,
+      user.passwd,
+      0,
       user.id
     ]);
     //console.log(rows);
@@ -58,7 +60,7 @@ const modifyUser = async (user) => {
     throw new Error("sql update failed");
   }
 };
-const deleteUser = async () => {
+const deleteUser = async (id) => {
   try {
     //TODO: add sql UPDATE
     const sql = `DELETE FROM wop_user WHERE user_id=?`;

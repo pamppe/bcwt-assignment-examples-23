@@ -25,8 +25,8 @@
                     enctype="multipart/form-data" id="addCatForm">
                     <input class="light-border" type="text" name="name" placeholder="Name">
                     <input class="light-border" type="text" name="birthdate" placeholder="Birthdate: YYYY-MM-DD">
-                    <input class="light-border" type="number" step="0.1" name="weight" placeholder="Weight">
-                    <input class="light-border" type="file" name="cat" accept="image/*" placeholder="Choose file">
+                    <input class="light-border" type="number" step="0.1" name="weight" placeholder="Weight" required min="0.1" max="50">
+                    <input class="light-border" type="file" name="cat" accept="image/png, image/jpg" placeholder="Choose file" required>
                     <button class="light-border" type="submit">Upload</button>
                 </form>
             </div>
