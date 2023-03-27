@@ -68,7 +68,7 @@ const modifyCat = async (cat) => {
   }
 };
 
-const deleteCat = async () => {
+const deleteCat = async (id) => {
   try {
     //TODO: add sql UPDATE
     const sql = `DELETE FROM wop_cat WHERE cat_id=?`;
