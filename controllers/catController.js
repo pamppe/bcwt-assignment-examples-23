@@ -7,11 +7,11 @@ const getCatList = async (req, res) => {
         let cats = await catModel.getAllCats();
         // convert ISO date to date only
         // should this be done on the front-end side??
+        console.log('cats',cats)
         cats.map(cat => {
             cat.birthdate = cat.birthdate.toISOString().split('T')[0];
             return cat;
         });
-        console.log(cats);
         res.json(cats);
     }
     catch (error) {
@@ -21,7 +21,7 @@ const getCatList = async (req, res) => {
 const getCat = async (req, res) => {
     //console.log(req.params);
     //convert id value to number
-    const catId = Number(req.params.catId);
+    const catId = Number(req.params.id);
     // check if number is not an integer
     if (!Number.isInteger(catId)) {
         res.status(400).json({error: 500, message: "invalid id"});
@@ -67,9 +67,9 @@ const putCat = async (req, res) => {
     }
     };
 const deleteCat = async (req, res) => {
-    console.log('deleting a cat', req.params.catId);
+    console.log('deleting a cat', req.params.id);
     try {
-        const result = await catModel.deleteCat(req.params.catId);
+        const result = await catModel.deleteCat(req.params.id);
         res.status(200).json('Cat deleted');
     } catch (error) {
         res.status(500).json({error: 500, message: error.message});
