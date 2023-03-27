@@ -2,6 +2,8 @@
 const pool = require("../database/db");
 const promisePool = pool.promise();
 
+// TODO: Add validation &
+
 const getAllUsers = async () => {
   try {
     const sql = `SELECT user_id, name, email FROM wop_user`;
