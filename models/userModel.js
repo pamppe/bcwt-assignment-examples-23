@@ -72,21 +72,19 @@ const deleteUser = async () => {
     throw new Error("sql delete user failed");
   }
 };
-/*const users = [
-  {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@metropolia.fi',
-    password: '1234',
-  },
-  {
-    id: '2',
-    name: 'Jane Doez',
-    email: 'jane@metropolia.fi',
-    password: 'qwer',
-  },
-];*/
+
+const getUserLogin = async (email) => {
+  try {
+    console.log(email);
+    const [rows] = await promisePool.execute(
+        'SELECT * FROM wop_user WHERE email = ?;',
+        [email]);
+    return rows;
+  } catch (e) {
+    console.log('error', e.message);
+  }
+};
 
 module.exports = {
-  getAllUsers, getUserById, insertUser, modifyUser, deleteUser
+  getAllUsers, getUserById, insertUser, modifyUser, deleteUser, getUserLogin
 };

@@ -9,6 +9,7 @@ router.get('/:userId', userController.getUser);
 router.post('/', userController.postUser);
 router.put('/', userController.putUser);
 router.delete('/:userId', userController.deleteUser)
+router.get('/token', userController.checkToken)
 
 // TODO: ADD USER
 

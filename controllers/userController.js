@@ -70,6 +70,16 @@ const deleteUser = async (req, res) => {
     //res.json(delUser);
 }
 
+const checkToken = (req, res) => {
+    res.json({user: req.user});
+};
 
-const userController = {getUserList, getUser, postUser, putUser, deleteUser};
+const userController = {
+    getUserList,
+    getUser,
+    postUser,
+    putUser,
+    deleteUser,
+    checkToken};
+
 module.exports = userController;
