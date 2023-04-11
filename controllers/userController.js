@@ -1,7 +1,6 @@
 'use strict';
 // userController
 const userModel = require('../models/userModel');
-const catModel = require("../models/catModel");
 
 /*const users = userModel.users;
 //remove passwords
@@ -14,8 +13,7 @@ const getUserList = async (req, res) => {
         const users = await userModel.getAllUsers();
         //console.log(cats);
         res.json(users);
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({error: 500, message: error.message});
     }
 };

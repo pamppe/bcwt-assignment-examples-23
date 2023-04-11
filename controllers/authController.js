@@ -25,7 +25,6 @@ const login = (req, res) => {
             return res.json({user, token});
         });
     })(req, res);
-
     //res.send('this will be login');
 };
 
