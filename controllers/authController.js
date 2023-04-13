@@ -28,6 +28,11 @@ const login = (req, res) => {
     //res.send('this will be login');
 };
 
+const logout = (req, res) => {
+    // client log out itself by removing the token from local/session storage
+    res.json({message: 'logged out'});
+};
+
 module.exports = {
-    login,
+    login, logout
 };

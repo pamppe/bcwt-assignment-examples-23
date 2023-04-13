@@ -2,6 +2,7 @@
 // catController
 const catModel = require('../models/catModel');
 const {validationResult} = require('express-validator');
+const {makeThumbnails} = require('../utils/image');
 
 const getCatList = async (req, res) => {
     try {
@@ -43,7 +44,7 @@ const getCat = async (req, res) => {
 };
 
 const postCat = async (req, res) => {
-    console.log('posting a cat', req.body, req.file);
+    //console.log('posting a cat', req.body, req.file);
     if (!req.file) {
         res.status(400).json({status: 400,
             message: 'Invalid or missing image file'});
@@ -59,6 +60,10 @@ const postCat = async (req, res) => {
     // add cat details to cats array
     const newCat = req.body;
     newCat.filename = req.file.filename;
+    // use req.user (extracted from token by passport) to add correct owner id
+    // NOTE: owner field must not be validated anymore in cat route when uploading cats
+    newCat.owner = req.user.user_id;
+    await makeThumbnail(req.file.path, newCat.filename);
     try {
         const result = await catModel.insertCat(newCat);
         // send correct response if upload successful
@@ -77,14 +82,22 @@ const putCat = async (req, res) => {
         return;
     }
     const cat = req.body;
+    // for now owner is always the logged in user (read from token)
+    cat.owner = req.user.user_id;
+    // Note the two alternatives for passing the cat id in router
+    if (req.params.id) {
+        cat.id = parseInt(req.params.id);
+    }
     try {
-        const result = await catModel.modifyCat(req.body);
-        // send correct response if upload successful
-        res.status(200).json('Cat modified');
+        console.log('updating a cat', req.body);
+        // only owner of the cat can update it's data (req.user.user_id == cat.owner)
+        // checked in catModel with sql query
+        const result = await catModel.modifyCat(cat, req.user.user_id);
+        res.status(200).json({message: 'cat modified!'});
     } catch (error) {
         res.status(500).json({error: 500, message: error.message});
     }
-    };
+};
 const deleteCat = async (req, res) => {
     console.log('deleting a cat', req.params.id);
     try {

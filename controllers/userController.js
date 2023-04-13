@@ -1,6 +1,8 @@
 'use strict';
 // userController
 const userModel = require('../models/userModel');
+const {validationResult} = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 /*const users = userModel.users;
 //remove passwords
@@ -39,18 +41,31 @@ const getUser = async (req, res) => {
 };
 const postUser = async (req, res) => {
     console.log('posting user ', req.body, req.file);
-    const newUser = req.body;
-    newUser.filename = req.file.path;
-    const result = await userModel.insertUser(newUser);
-        //{// name: req.body.name,
-       // email: req.body.email,
-       // password: req.body.password
-        //};
-    users.push(newUser);
-    res.status(201).send('Added user ' + req.body.name);
-    // const createUser = req.params.user;
-    //res.json(createUser);
-}
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(req.body.passwd, salt);
+
+    const newUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: password,
+        role: 1,
+    };
+    const errors = validationResult(req);
+    console.log('validation errors', errors);
+    if (errors.isEmpty()) {
+        try {
+            const result = await userModel.insertUser(newUser);
+            res.status(201).json({message: 'user created', userId: result});
+        } catch (error) {
+            res.status(500).json({message: error.message});
+        }
+    } else {
+        res.status(400).json({
+            message: 'user creation failed',
+            errors: errors.array(),
+        });
+    }
+};
 const putUser = async (req, res) => {
     console.log("modify a user", req.body);
     const user = req.body;

@@ -18,12 +18,16 @@ app.use((req, res, next) => {
 app.use(express.static('example-ui'));
 //serve image files
 app.use('/uploads', express.static('uploads'));
+// serve thumbnails
+app.use('/thumbnails', express.static('thumbnails'));
+
 // Add 'Access-Control-Allow-Origin: *' header to all
 // responses using cors middleware
 app.use(cors());
 // middleware for parsing request body
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+// Use passport for authentication
 app.use(passport.initialize());
 
 app.use('/auth', authRoute);
