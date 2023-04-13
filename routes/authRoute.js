@@ -2,12 +2,12 @@
 const express = require("express");
 const router = express.Router();
 const {body} = require('express-validator');
-const { login } = require("../controllers/authController");
+const { login, logout } = require("../controllers/authController");
 const {postUser} = require('../controllers/userController');
 
 router
     .post("/login", login)
-    .post('/logout')
+    .get('/logout', logout)
     .post(
         '/register',
         body('name').isLength({min: 3}).trim().escape(),

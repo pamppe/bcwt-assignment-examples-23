@@ -7,7 +7,7 @@ const login = (req, res) => {
     // TODO: add passport authenticate
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err || !user) {
-            console.log(info)
+            console.log('auth error', info)
             return res.status(400).json({
                 message: 'Username / password wrong',
                 // or more detailed message:

@@ -16,7 +16,9 @@ app.use((req, res, next) => {
 
 // Serve example-ui
 app.use(express.static('example-ui'));
-//serve image files
+// Serve uploaded image files
+//app.use('/uploads', express.static('uploads'));
+// Serve uploaded image files (example-ui compliant using root route)
 app.use('/uploads', express.static('uploads'));
 // serve thumbnails
 app.use('/thumbnails', express.static('thumbnails'));

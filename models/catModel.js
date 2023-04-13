@@ -39,7 +39,7 @@ const insertCat = async (cat) => {
         cat.weight,
         cat.owner,
         cat.filename,
-        cat.birthdate
+        cat.birthdate,
     ]);
     //console.log(rows);
     return rows;

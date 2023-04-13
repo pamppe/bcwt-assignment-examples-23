@@ -74,6 +74,18 @@ const deleteUser = async () => {
   }
 };
 
+const updateUser = async (user) => {
+  try {
+    const sql = 'UPDATE wop_user SET name=?, email=?, password=?, role=? WHERE user_id=?';
+    const values = [user.name, user.email, user.passwd, user.role];
+    const [result] = await promisePool.query(sql, values);
+    return result.insertId;
+  } catch (e) {
+    console.error('error', e.message);
+    throw new Error('sql query failed');
+  }
+};
+
 const getUserLogin = async (email) => {
   try {
     console.log(email);
@@ -88,5 +100,5 @@ const getUserLogin = async (email) => {
 };
 
 module.exports = {
-  getAllUsers, getUserById, insertUser, modifyUser, deleteUser, getUserLogin
+  getAllUsers, getUserById, insertUser, modifyUser, deleteUser, getUserLogin, updateUser
 };

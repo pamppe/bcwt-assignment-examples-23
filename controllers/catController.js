@@ -2,7 +2,7 @@
 // catController
 const catModel = require('../models/catModel');
 const {validationResult} = require('express-validator');
-const {makeThumbnails} = require('../utils/image');
+const {makeThumbnail} = require('../utils/image');
 
 const getCatList = async (req, res) => {
     try {
@@ -44,20 +44,23 @@ const getCat = async (req, res) => {
 };
 
 const postCat = async (req, res) => {
-    //console.log('posting a cat', req.body, req.file);
+    // console.log('posting a cat', req.body, req.file);
     if (!req.file) {
-        res.status(400).json({status: 400,
-            message: 'Invalid or missing image file'});
+        res.status(400).json({
+            status: 400,
+            message: 'Invalid or missing image file'
+        });
         return;
     }
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-        res.status(400).json({status: 400,
+        res.status(400).json({
+            status: 400,
             errors: validationErrors.array(),
-            message: 'Invalid data'});
+            message: 'Invalid post data'
+        });
         return;
     }
-    // add cat details to cats array
     const newCat = req.body;
     newCat.filename = req.file.filename;
     // use req.user (extracted from token by passport) to add correct owner id
@@ -66,12 +69,12 @@ const postCat = async (req, res) => {
     await makeThumbnail(req.file.path, newCat.filename);
     try {
         const result = await catModel.insertCat(newCat);
-        // send correct response if upload successful
         res.status(201).json({message: 'new cat added!'});
     } catch (error) {
         res.status(500).json({error: 500, message: error.message});
     }
 };
+
 const putCat = async (req, res) => {
     console.log('modify a cat', req.body);
     const validationErrors = validationResult(req);
